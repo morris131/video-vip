@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
+</head>
+<body>
+  <header class="aui-bar aui-bar-nav" id="aui-header">
+      <a class="aui-btn aui-pull-left" tapmode onclick="closeWin()">
+          <span class="aui-iconfont aui-icon-left"></span>
+      </a>
+
+      <a id="play" class="aui-btn aui-pull-right" tapmode onclick="jieXi()">
+          换线
+      </a>
+
+  </header>
+</body>
+<script type="text/javascript" src="../script/api.js" ></script>
+<script type="text/javascript">
+
+    apiready = function(){
+
+      api.parseTapmode();
+      var header = $api.byId('aui-header');
+      $api.fixStatusBar(header);
+      var headerPos = $api.offset(header);
+      var body_h = $api.offset($api.dom('body')).h;
+
+      api.addEventListener({
+          name: 'keyback'
+      }, function(ret, err) {
+        api.setScreenOrientation({
+            orientation: 'portrait_up'
+        });
+        api.closeWin();
+      });
+
+
+      var browser = api.require('webBrowser');
+      browser.openView({
+          url: api.pageParam.url,
+          rect: {
+              x: 0,
+              y: 0,
+              w: 'auto',
+              h: 'auto'
+          }
+      }, function(ret, err) {
+          switch (ret.state) {
+              case 0:
+                  break;
+              case 1:
+                  break;
+              case 2:
+              api.setScreenOrientation({
+                  orientation: 'landscape_right'
+              });
+                  break;
+              case 3:
+                  break;
+              case 4:
+                  break;
+              default:
+                  break;
+          };
+      });
+
+
+    }
+
+    function getCaption(obj){
+      var index=obj.lastIndexOf("\=");
+      obj=obj.substring(index+1,obj.length);
+      return obj;
+    }
+
+    function closeWin(){
+      api.setScreenOrientation({
+          orientation: 'portrait_up'
+      });
+      api.closeWin();
+    }
+
+    function jieXi(){
+      api.actionSheet({
+          title: '追剧吧VIP线路',
+          cancelTitle: '取消',
+          buttons: ['VIP线路1', 'VIP线路2', 'VIP线路3', 'VIP线路4', 'VIP线路5', 'VIP线路6', 'VIP线路7', 'VIP线路8', 'VIP线路9']
+      }, function(ret, err) {
+          var index = ret.buttonIndex;
+          if (ret.buttonIndex==1) {
+            vipHuanxian('http://www.jiudingkeji.cn/odflv/index.php?url=');
+          }
+          if (ret.buttonIndex==2) {
+            vipHuanxian('http://jiudingkeji.cn/kkflv/player.php?url=');
+          }
+          if (ret.buttonIndex==3) {
+            vipHuanxian('http://qmyouku.duapp.com/bofang.php?url=');
+          }
+          if (ret.buttonIndex==4) {
+            vipHuanxian('http://jx.jp-z.cn/vip/?url=');
+          }
+          if (ret.buttonIndex==5) {
+            vipHuanxian('http://zhjiexi.cn/jx.php?url=');
+          }
+          if (ret.buttonIndex==6) {
+            vipHuanxian('http://yun.mt2t.com/yun?url=');
+          }
+          if (ret.buttonIndex==7) {
+            vipHuanxian('http://api74.19ah.cn/play/play1.php?url=');
+          }
+          if (ret.buttonIndex==8) {
+            vipHuanxian('http://wapyo.cn/vip/jiexi.php?url=');
+          }
+          if (ret.buttonIndex==9) {
+            vipHuanxian('http://jx.vgoodapi.com/jx.php?url=');
+          }
+      });
+    }
+
+
+
+    function vipHuanxian(jiekou){
+      api.hideProgress();
+      var browser = api.require('webBrowser');
+      browser.loadUrl({
+          url: jiekou+api.pageParam.url
+      });
+    }
+
+
+
+
+</script>
+</html>
